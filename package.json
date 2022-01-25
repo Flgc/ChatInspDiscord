@@ -6,6 +6,7 @@
   "author": "Fabio Luis <ml@fabiotecnico1.biz>",
   "license": "MIT",
   "dependencies": {
+    "@skynexui/components": "^1.23.7",
     "nex": "^2.0.22",
     "next": "^12.0.8",
     "react": "^17.0.2",
