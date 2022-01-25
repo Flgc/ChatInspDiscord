@@ -1,3 +1,4 @@
+import appConfig from '../config.json';
 
 function GlobalStyle() {
   return (
@@ -30,22 +31,20 @@ function GlobalStyle() {
 
 
 function Title(props) {
+  console.log(props);
   const Tag = props.tag;
   return (
     <>
-      <Tag>
-        {props.children}
-      </Tag>
-      <style jsx>{
-        `${Tag}
-              {
-                color: red;
+      <Tag>{props.children}</Tag>
+      <style jsx>{`
+        ${Tag}{
+                color: ${appConfig.theme.colors.neutrals['900']};
                 font-size: 24px;
                 font-weight: 600;
-              }`
-      }
-      </style></>
-  )
+              }
+      `}</style>
+      </>
+  );
 }
 
 //React Component
