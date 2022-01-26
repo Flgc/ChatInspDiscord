@@ -11,13 +11,27 @@ export default function ChatPage() {
       
     - Dev
       [x] Campo já criado
-      [+/-] Implementar onChange e useState (if para verificar se enter foi pressionado e limpar a variavel)
-      [] Lista de mensagem
+      [x] Implementar onChange e useState (if para verificar se enter foi pressionado e limpar a variavel)
+      [+/-] Lista de mensagem
 
     */
 
     const [mensagem, setMensagem] = React.useState('');
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
+
+    function handleNovaMensagem(novaMensagem) {
+        const mensagem = {
+            id: listaDeMensagens.length + 1,
+            de: 'vanessatoini',
+            texto: novaMensagem,
+        };
+
+        setListaDeMensagens([
+            ...listaDeMensagens,
+            mensagem,
+        ]);
+        setMensagem('');        
+    }
 
     return (
         <Box
@@ -59,10 +73,9 @@ export default function ChatPage() {
 
                     <MessageList />
                     {listaDeMensagens.map((mensagemAtual) => {
-                        console.log(mensagemAtual);
                         return (
-                            <li>
-                                {mensagemAtual}
+                            <li key={mensagemAtual.id}>
+                                {mensagemAtual.de}: {mensagemAtual.texto}
                             </li>
                         )
                     })}
@@ -82,12 +95,8 @@ export default function ChatPage() {
                             }}
                             onKeyPress={(event) => {
                                 if(event.key === 'Enter') {
-                                    console.log(event);
-                                    setListaDeMensagens([
-                                        ...listaDeMensagens,
-                                        mensagem
-                                    ]);
-                                    setMensagem('');
+                                    event.preventDefault();
+                                    handleNovaMensagem(mensagem);
                                 }
                             }}
 
