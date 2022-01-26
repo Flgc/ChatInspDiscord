@@ -16,7 +16,8 @@ export default function ChatPage() {
 
     */
 
-    const [mensagem, setMensagem] = React.useState('');    
+    const [mensagem, setMensagem] = React.useState('');
+    const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
     return (
         <Box
@@ -56,7 +57,15 @@ export default function ChatPage() {
                     }}
                 >
 
-                    {/* <MessageList mensagens={[]} /> */}
+                    <MessageList />
+                    {listaDeMensagens.map((mensagemAtual) => {
+                        console.log(mensagemAtual);
+                        return (
+                            <li>
+                                {mensagemAtual}
+                            </li>
+                        )
+                    })}
 
                     <Box
                         as="form"
@@ -74,11 +83,13 @@ export default function ChatPage() {
                             onKeyPress={(event) => {
                                 if(event.key === 'Enter') {
                                     console.log(event);
+                                    setListaDeMensagens([
+                                        ...listaDeMensagens,
+                                        mensagem
+                                    ]);
                                     setMensagem('');
                                 }
                             }}
-
-
 
                             placeholder="Insira sua mensagem aqui..."
                             type="textarea"
@@ -134,7 +145,6 @@ function MessageList(props) {
         >
 
             <Text
-                key={mensagem.id}
                 tag="li"
                 styleSheet={{
                     borderRadius: '5px',
@@ -161,7 +171,7 @@ function MessageList(props) {
                         src={`https://github.com/vanessametonini.png`}
                     />
                     <Text tag="strong">
-                        {mensagem.de}
+                        vanessametonini
                     </Text>
                     <Text
                         styleSheet={{
@@ -174,7 +184,7 @@ function MessageList(props) {
                         {(new Date().toLocaleDateString())}
                     </Text>
                 </Box>
-                {mensagem.texto}
+                Mensagem
             </Text>
         </Box>
     )
