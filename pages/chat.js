@@ -12,7 +12,7 @@ export default function ChatPage() {
     - Dev
       [x] Campo já criado
       [x] Implementar onChange e useState (if para verificar se enter foi pressionado e limpar a variavel)
-      [+/-] Lista de mensagem
+      [X] Lista de mensagem
 
     */
 
@@ -27,8 +27,8 @@ export default function ChatPage() {
         };
 
         setListaDeMensagens([
-            ...listaDeMensagens,
             mensagem,
+            ...listaDeMensagens,
         ]);
         setMensagem('');        
     }
@@ -71,14 +71,8 @@ export default function ChatPage() {
                     }}
                 >
 
-                    <MessageList />
-                    {listaDeMensagens.map((mensagemAtual) => {
-                        return (
-                            <li key={mensagemAtual.id}>
-                                {mensagemAtual.de}: {mensagemAtual.texto}
-                            </li>
-                        )
-                    })}
+                    <MessageList mensagens={listaDeMensagens} />
+                    // Recebe a props
 
                     <Box
                         as="form"
@@ -139,7 +133,9 @@ function Header() {
 }
 
 function MessageList(props) {
+    // Inserção do props
     console.log('MessageList', props);
+
     return (
         <Box
             tag="ul"
@@ -153,48 +149,53 @@ function MessageList(props) {
             }}
         >
 
-            <Text
-                tag="li"
-                styleSheet={{
-                    borderRadius: '5px',
-                    padding: '6px',
-                    marginBottom: '12px',
-                    hover: {
-                        backgroundColor: appConfig.theme.colors.neutrals[700],
-                    }
-                }}
-            >
-                <Box
-                    styleSheet={{
-                        marginBottom: '8px',
-                    }}
-                >
-                    <Image
-                        styleSheet={{
-                            width: '20px',
-                            height: '20px',
-                            borderRadius: '50%',
-                            display: 'inline-block',
-                            marginRight: '8px',
-                        }}
-                        src={`https://github.com/vanessametonini.png`}
-                    />
-                    <Text tag="strong">
-                        vanessametonini
-                    </Text>
-                    <Text
-                        styleSheet={{
-                            fontSize: '10px',
-                            marginLeft: '8px',
-                            color: appConfig.theme.colors.neutrals[300],
-                        }}
-                        tag="span"
-                    >
-                        {(new Date().toLocaleDateString())}
-                    </Text>
-                </Box>
-                Mensagem
-            </Text>
+           {props.mensagens.map((mensagem) => {
+               return (
+                   <Text
+                       key={mensagem.id}
+                       tag="li"
+                       styleSheet={{
+                           borderRadius: '5px',
+                           padding: '6px',
+                           marginBottom: '12px',
+                           hover: {
+                               backgroundColor: appConfig.theme.colors.neutrals[700],
+                           }
+                       }}
+                   >
+                       <Box
+                           styleSheet={{
+                               marginBottom: '8px',
+                           }}
+                       >
+                           <Image
+                               styleSheet={{
+                                   width: '20px',
+                                   height: '20px',
+                                   borderRadius: '50%',
+                                   display: 'inline-block',
+                                   marginRight: '8px',
+                               }}
+                               src={`https://github.com/vanessametonini.png`}
+                           />
+                           <Text tag="strong">
+                               {mensagem.de}
+                           </Text>
+                           <Text
+                               styleSheet={{
+                                   fontSize: '10px',
+                                   marginLeft: '8px',
+                                   color: appConfig.theme.colors.neutrals[300],
+                               }}
+                               tag="span"
+                           >
+                               {(new Date().toLocaleDateString())}
+                           </Text>
+                       </Box>
+                       {mensagem.texto}
+                   </Text>                   
+               )
+           })}
         </Box>
     )
 }
