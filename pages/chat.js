@@ -1,6 +1,18 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
+import { createClient } from '@supabase/supabase-js'
+
+const SUPABASE_ANON_KEY = ''
+const SUPABASE_URL = ''
+const supabasicClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+supabasicClient
+    .from('messageChat')
+    .select('*')
+    .then((dados) => {
+        console.log('Dados da consulta: ', dados);  
+    });
 
 export default function ChatPage() {
     /*
