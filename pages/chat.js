@@ -1,6 +1,7 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
+import { useRouter } from 'next/router';
 import { createClient } from '@supabase/supabase-js'
 
 const SUPABASE_ANON_KEY = ''
@@ -22,6 +23,8 @@ export default function ChatPage() {
     
     */
 
+    const roteamento = useRouter();
+    const userLogin = roteamento.query.username;
     const [mensagem, setMensagem] = React.useState('');
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
@@ -37,9 +40,8 @@ export default function ChatPage() {
     }, []);
 
     function handleNovaMensagem(novaMensagem) {
-        const mensagem = {
-            //id: listaDeMensagens.length + 1,
-            from: 'vanessametonini',                   
+        const mensagem = {            
+            from: userLogin,                   
             text: novaMensagem,
         };
 
