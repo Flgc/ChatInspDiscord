@@ -6,8 +6,7 @@ import { createClient } from '@supabase/supabase-js'
 const SUPABASE_ANON_KEY = ''
 const SUPABASE_URL = ''
 
-const supabasiClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
     /*
@@ -27,10 +26,11 @@ export default function ChatPage() {
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
     React.useEffect(() => {
-        supabasiClient
+        supabaseClient
             .from('messageChat')
             .select('*')
-            .then((data) => {
+            .order('id', { ascending: false})
+            .then(({ data }) => {
                 console.log('Dados da consulta: ', data);
                 setListaDeMensagens(data);
             });
@@ -38,15 +38,24 @@ export default function ChatPage() {
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-            id: listaDeMensagens.length + 1,
-            from: 'vanessametonini',
+            //id: listaDeMensagens.length + 1,
+            from: 'vanessametonini',                   
             text: novaMensagem,
         };
 
-        setListaDeMensagens([
-            mensagem,
-            ...listaDeMensagens,
-        ]);
+        supabaseClient
+            .from('messageChat')
+            .insert([
+                mensagem
+            ])
+            .then(({ data }) => {
+                console.log('Creating message: ', data);
+                setListaDeMensagens([
+                    data[0],
+                    ...listaDeMensagens,
+                ]);
+            });
+
         setMensagem('');
     }
 
