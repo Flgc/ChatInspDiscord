@@ -5,7 +5,8 @@ import { createClient } from '@supabase/supabase-js'
 
 const SUPABASE_ANON_KEY = ''
 const SUPABASE_URL = ''
-const supabasicClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const supabasiClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 export default function ChatPage() {
@@ -26,19 +27,20 @@ export default function ChatPage() {
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
     React.useEffect(() => {
-        supabasicClient
+        supabasiClient
             .from('messageChat')
             .select('*')
-            .then((dados) => {
-                console.log('Dados da consulta: ', dados);
+            .then((data) => {
+                console.log('Dados da consulta: ', data);
+                setListaDeMensagens(data);
             });
-    }, [listaDeMensagens]);
+    }, []);
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
             id: listaDeMensagens.length + 1,
-            de: 'vanessatoini',
-            texto: novaMensagem,
+            from: 'vanessametonini',
+            text: novaMensagem,
         };
 
         setListaDeMensagens([
@@ -191,10 +193,10 @@ function MessageList(props) {
                                     display: 'inline-block',
                                     marginRight: '8px',
                                 }}
-                                src={`https://github.com/vanessametonini.png`}
+                                src={`https://github.com/${mensagem.from}.png`}
                             />
                             <Text tag="strong">
-                                {mensagem.de}
+                                {mensagem.from}
                             </Text>
                             <Text
                                 styleSheet={{
@@ -207,7 +209,7 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </Box>
-                        {mensagem.texto}
+                        {mensagem.text}
                     </Text>
                 )
             })}
