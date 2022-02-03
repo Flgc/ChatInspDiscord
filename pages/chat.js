@@ -229,10 +229,11 @@ function MessageList(props) {
                             </Text>
                         </Box>
                         {/* {Método Declarativo no React} */}
-                        Condicional: {mensagem.text.startsWith(':sticker:').toString()}
+                        {/* Condicional: {mensagem.text.startsWith(':sticker:').toString()} */}
+                        
                         {mensagem.text.startsWith(':sticker:') 
                             ? (
-                                'É stiker -> '
+                                <Image src={mensagem.text.replace(':sticker:', '')} />
                             )
                             : (
                                 mensagem.text
