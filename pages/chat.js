@@ -7,8 +7,17 @@ import { ButtonSendSticker } from '../src/components/ButtonSendSticker';
 
 const SUPABASE_ANON_KEY = ''
 const SUPABASE_URL = ''
-
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function listeningToTheMessageOnRealTime(){
+    return supabaseClient
+    .from('messageChat')
+    .on('INSERT', () => {
+        console.log('Escutou uma nova mensagem');
+
+    })
+    .subscribe();     
+};
 
 export default function ChatPage() {
     /*
@@ -27,13 +36,7 @@ export default function ChatPage() {
     const roteamento = useRouter();
     const userLogin = roteamento.query.username;
     const [mensagem, setMensagem] = React.useState('');
-    const [listaDeMensagens, setListaDeMensagens] = React.useState([
-        //{
-        //     id: 1,
-        //     from: 'Flgc',
-        //     text: ':sticker: https://i.pinimg.com/originals/0b/1c/23/0b1c2307c83e1ebdeed72e41b9a058ad.gif',
-        //}
-    ]);
+    const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
     React.useEffect(() => {
         supabaseClient
@@ -44,6 +47,8 @@ export default function ChatPage() {
                 console.log('Dados da consulta: ', data);
                 setListaDeMensagens(data);
             });
+
+            listeningToTheMessageOnRealTime();
     }, []);
 
     function handleNovaMensagem(novaMensagem) {
