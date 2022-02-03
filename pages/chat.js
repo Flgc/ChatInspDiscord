@@ -27,7 +27,13 @@ export default function ChatPage() {
     const roteamento = useRouter();
     const userLogin = roteamento.query.username;
     const [mensagem, setMensagem] = React.useState('');
-    const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
+    const [listaDeMensagens, setListaDeMensagens] = React.useState([
+        {
+            id: 1,
+            from: 'Flgc',
+            text: ':sticker: https://i.pinimg.com/originals/0b/1c/23/0b1c2307c83e1ebdeed72e41b9a058ad.gif',
+        }
+    ]);
 
     React.useEffect(() => {
         supabaseClient
@@ -36,7 +42,7 @@ export default function ChatPage() {
             .order('id', { ascending: false})
             .then(({ data }) => {
                 console.log('Dados da consulta: ', data);
-                setListaDeMensagens(data);
+                // setListaDeMensagens(data);
             });
     }, []);
 
@@ -222,7 +228,16 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </Box>
-                        {mensagem.text}
+                        {/* {Método Declarativo no React} */}
+                        Condicional: {mensagem.text.startsWith(':sticker:').toString()}
+                        {mensagem.text.startsWith(':sticker:') 
+                            ? (
+                                'É stiker -> '
+                            )
+                            : (
+                                mensagem.text
+                            )}
+                        {/* {mensagem.text} */}
                     </Text>
                 )
             })}
