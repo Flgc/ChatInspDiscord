@@ -28,11 +28,11 @@ export default function ChatPage() {
     const userLogin = roteamento.query.username;
     const [mensagem, setMensagem] = React.useState('');
     const [listaDeMensagens, setListaDeMensagens] = React.useState([
-        {
-            id: 1,
-            from: 'Flgc',
-            text: ':sticker: https://i.pinimg.com/originals/0b/1c/23/0b1c2307c83e1ebdeed72e41b9a058ad.gif',
-        }
+        //{
+        //     id: 1,
+        //     from: 'Flgc',
+        //     text: ':sticker: https://i.pinimg.com/originals/0b/1c/23/0b1c2307c83e1ebdeed72e41b9a058ad.gif',
+        //}
     ]);
 
     React.useEffect(() => {
@@ -42,7 +42,7 @@ export default function ChatPage() {
             .order('id', { ascending: false})
             .then(({ data }) => {
                 console.log('Dados da consulta: ', data);
-                // setListaDeMensagens(data);
+                setListaDeMensagens(data);
             });
     }, []);
 
