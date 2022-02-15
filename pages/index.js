@@ -25,24 +25,10 @@ function Titulo(props){
   );
 }
 
-// Componente React
-// function HomePage() {
-//     // JSX
-//     return (
-//         <div>
-//             <GlobalStyle />
-//             <Titulo tag="h2">Boas vindas de volta!</Titulo>
-//             <h2>Discord - Alura Matrix</h2>
-//         </div>
-//     )
-// }
-// export default HomePage
-
-export default function PaginaInicial() {
-  // const username = 'Flgc';
+export default function PaginaInicial() {  
   const [username, setUsername] = React.useState('');
   const roteamento = useRouter();
-  const startImage = '/img/yamatoGIF.gif';
+  const imageStart = '/img/yamatoGIF.gif';
 
   return (
     <>
@@ -50,7 +36,7 @@ export default function PaginaInicial() {
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           backgroundColor: appConfig.theme.colors.primary[500],
-          backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+          backgroundImage: 'url(/staryamato.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -82,24 +68,14 @@ export default function PaginaInicial() {
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
             }}
           >
-            <Titulo tag="h2">Boas vindas de volta!</Titulo>
-            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
-              {appConfig.name}
+            <Titulo tag="h2">Que bom que você voltou!</Titulo>
+            <Text variant="body2" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals['000'] }}>
+              {< DiReact />} {appConfig.name}
+
             </Text>
 
-            {/* <input
-              type="text"
-              value={username}
-              onChange={function (event) {
-                console.log('usuário digitou ', event.target.value);
-                // Onde está o valor?
-                const valor = event.target.value;
-                // trocando o valor da variável através do React 
-                setUsername(valor);
-              }}
-            /> */}
-
             <TextField
+              placeholder="Informe o seu login no GitHub"
               value={username}
               onChange={function (event) {
                 console.log('usuário digitou ', event.target.value);
@@ -113,8 +89,8 @@ export default function PaginaInicial() {
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
                   mainColor: appConfig.theme.colors.neutrals[900],
-                  mainColorHighlight: appConfig.theme.colors.primary[500],
-                  backgroundColor: appConfig.theme.colors.neutrals[800],
+                  mainColorHighlight: appConfig.theme.colors.button.buttonBlue,
+                  backgroundColor: appConfig.theme.colors.background.fundoBlack,
                 },
               }}
             /> 
@@ -124,9 +100,9 @@ export default function PaginaInicial() {
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
-                mainColor: appConfig.theme.colors.primary[500],
+                mainColor: appConfig.theme.colors.button.buttonBlue,
                 mainColorLight: appConfig.theme.colors.primary[400],
-                mainColorStrong: appConfig.theme.colors.primary[600],
+                mainColorStrong: appConfig.theme.colors.button.buttonBlack,                
               }}
             />
           </Box>
@@ -139,34 +115,43 @@ export default function PaginaInicial() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              maxWidth: '200px',
+              maxWidth: '250px',
               padding: '16px',
-              backgroundColor: appConfig.theme.colors.neutrals[800],
-              border: '1px solid',
-              borderColor: appConfig.theme.colors.neutrals[999],
-              borderRadius: '10px',
               flex: 1,
-              minHeight: '240px',
+              minHeight: '240px',              
             }}
           >
             <Image
               styleSheet={{
                 borderRadius: '50%',
                 marginBottom: '16px',
+                boxShadow: '0 0 15px 0 #000',
               }}
-              src={`https://github.com/${username}.png`}
+
+              onError={function (event) {
+                event.target.src = imagemInicial
+              }}
+
+              src={username.length > 2 ? `https://github.com/${username}.png` : imageStart}
             />
-            <Text
-              variant="body4"
-              styleSheet={{
-                color: appConfig.theme.colors.neutrals[200],
-                backgroundColor: appConfig.theme.colors.neutrals[900],
-                padding: '3px 10px',
-                borderRadius: '1000px'
-              }}
+
+            <a
+              href={`https://github.com/${username}`}
+              target={'_blank'}
             >
-              {username}
-            </Text>
+
+              <Text
+                variant="body3"
+                styleSheet={{
+                  color: appConfig.theme.colors.neutrals['000'],
+                  fontSize: '16px',
+                  padding: '3px 10px',                  
+                }}
+              >
+                {username}
+              </Text>
+            </a>
+
           </Box>
           {/* Photo Area */}
         </Box>
