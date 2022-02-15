@@ -12,31 +12,25 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 function listeningToTheMessageOnRealTime(){
     return supabaseClient
     .from('messageChat')
-    .on('INSERT', () => {
-        console.log('Escutou uma nova mensagem');
-
+    .on('INSERT', (respostaLive) => {
+        adcionaMensagem(respostaLive.new);
+        
     })
     .subscribe();     
 };
 
 export default function ChatPage() {
-    /*
-    - Usuário:
-    - Necessita digitar no campo textarea
-    - Apertar enter para enviar
-    - Será necessário adicionar o texto na listagem
-    
-    - Dev
-    [x] Campo já criado
-    [x] Implementar onChange e useState (if para verificar se enter foi pressionado e limpar a variavel)
-    [X] Lista de mensagem
-    
-    */
 
     const roteamento = useRouter();
     const userLogin = roteamento.query.username;
     const [mensagem, setMensagem] = React.useState('');
-    const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
+    const [listaDeMensagens, setListaDeMensagens] = React.useState([
+        {
+            id: 1,
+            from: 'Flgc',
+            text: ':sticker: https://i.pinimg.com/originals/0b/1c/23/0b1c2307c83e1ebdeed72e41b9a058ad.gif',
+        }
+    ]);
 
     React.useEffect(() => {
         supabaseClient
@@ -44,11 +38,15 @@ export default function ChatPage() {
             .select('*')
             .order('id', { ascending: false})
             .then(({ data }) => {
-                console.log('Dados da consulta: ', data);
+                //console.log('Dados da consulta: ', data);
                 setListaDeMensagens(data);
             });
 
-            listeningToTheMessageOnRealTime();
+            //listeningToTheMessageOnRealTime();
+
+            // listeningToTheMessageOnRealTime((novaMensagem) => {
+            //     console.log(novaMensagem);                
+            // });
     }, []);
 
     function handleNovaMensagem(novaMensagem) {
@@ -60,6 +58,7 @@ export default function ChatPage() {
         supabaseClient
             .from('messageChat')
             .insert([
+                // Tem que ser um objeto com os MESMOS CAMPOS que você escreveu no supabase
                 mensagem
             ])
             .then(({ data }) => {
@@ -112,7 +111,6 @@ export default function ChatPage() {
                 >
 
                     <MessageList mensagens={listaDeMensagens} />
-                    // Recebe a props
 
                     <Box
                         as="form"
@@ -145,13 +143,6 @@ export default function ChatPage() {
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                            }}
-                        />
-                        { /* CallBack from {Props} */}
-                        <ButtonSendSticker
-                            onStickerClick={(sticker) => {
-                                console.log('[USANDO O COMPONENTE] Salva esse sticker no banco', sticker);
-                                handleNovaMensagem(':sticker: ' + sticker);
                             }}
                         />
                     </Box>
@@ -239,19 +230,9 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </Box>
-                        {/* {Método Declarativo no React} */}
-                        {/* Condicional: {mensagem.text.startsWith(':sticker:').toString()} */}
-                        
-                        {mensagem.text.startsWith(':sticker:') 
-                            ? (
-                                <Image src={mensagem.text.replace(':sticker:', '')} />
-                            )
-                            : (
-                                mensagem.text
-                            )}
-                        {/* {mensagem.text} */}
+                        {mensagem.text}
                     </Text>
-                )
+                );
             })}
         </Box>
     )

@@ -9,10 +9,12 @@
           "300": "#7BC47F",
           "400": "#57AE5B",
           "500": "#3F9142",
-          "600": "#2F8132",
+          "600": "#800000",
+          "650": "##F0F8FF",
           "700": "#207227",
           "800": "#0E5814",
-          "900": "#05400A"
+          "900": "#8B0000",
+          "950": "#A52A2A"        
         },
         "neutrals": {
           "000": "#FFFFFF",
@@ -20,17 +22,48 @@
           "100": "#E4E7EB",
           "200": "#CBD2D9",
           "300": "#9AA5B1",
+          "350": "##F0F8FF",
           "400": "#52667A",
           "500": "#313D49",
+          "550": "#4F4F4F",
           "600": "#29333D",
           "700": "#212931",
           "800": "#181F25",
-          "900": "#101418",
+          "900": "##8B0000",
           "999": "#080A0C"
+        },
+
+        "button": {
+          "buttonBlue": "#87CEEB",
+          "buttonBlueTransparente": "rgba(135,206,235,0.5)",
+          "buttonBlack": "#1C1C1C",
+          "buttonBlackTransparente": "rgba(0, 0, 0, 0.7)"
+        },
+        "background": {
+          "fundoBlack": "rgba(0, 0, 0, 0.6)",
+          "fundoBlack1": "rgba(0, 0, 0, 0.8)",
+          "fundoBlue": "rgba(135,206,235,0.5)"
         }
       }
     },
+
+    "userImageDefault": "./img/github.png",
+    "sound": "./sound/sound.mp3",
+
     "stickers": [
+      "/img/gwenGif.gif",
+      "/img/sticker1.png",  
+      "/img/sticker11.png",
+      "/img/sticker2.png", 
+      "/img/sticker3.png", 
+      "/img/sticker4.png", 
+      "/img/sticker5.png", 
+      "/img/sticker6.png",  
+      "/img/sticker7.png",
+      "/img/sticker8.png",
+      "/img/sticker9.png",
+      "/img/sticker10.png",
+            
       "https://www.alura.com.br/imersao-react-4/assets/figurinhas/Figurinha_1.png",
       "https://www.alura.com.br/imersao-react-4/assets/figurinhas/Figurinha_2.png",
       "https://www.alura.com.br/imersao-react-4/assets/figurinhas/Figurinha_3.png",

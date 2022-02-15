@@ -2,22 +2,26 @@ import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import React from 'react';
 import {useRouter} from 'next/router'
 import appConfig from '../config.json';
+import { DiReact } from "react-icons/di";
+
+//Componente React
+//Função recebe um argumento/propriedade
 
 
-
-function Titulo(props) {
-  const Tag = props.tag || 'h1';
+function Titulo(props){
+  console.log(props);
+  const Tag = props.tag;
   return (
-    <>
+      <>
       <Tag>{props.children}</Tag>
-      <style jsx>{`
-            ${Tag} {
-                color: ${appConfig.theme.colors.neutrals['000']};
-                font-size: 24px;
-                font-weight: 600;
-            }
-            `}</style>
-    </>
+          <style jsx>{`
+              ${Tag} {
+                  color: ${appConfig.theme.colors.neutrals['000']};
+                  font-size: 20px;
+                  font-weight:600;
+              }    
+          `}</style>
+      </>
   );
 }
 
@@ -36,8 +40,9 @@ function Titulo(props) {
 
 export default function PaginaInicial() {
   // const username = 'Flgc';
-  const [username, setUsername] = React.useState('Flgc');
+  const [username, setUsername] = React.useState('');
   const roteamento = useRouter();
+  const startImage = '/img/yamatoGIF.gif';
 
   return (
     <>
