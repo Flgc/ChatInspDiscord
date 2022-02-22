@@ -12,6 +12,7 @@ import { createClient } from '@supabase/supabase-js'
 // const SUPABASE_ANON_KEY = ''
 // const SUPABASE_URL = ''
 
+
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
@@ -44,15 +45,14 @@ export default function ChatPage() {
                 setListMens(data);
             });          
             listeningToTheMessageOnRealTime((newMes) => {
-                console.log('New Message: ', newMes.from);
+                console.log('New Message: ', newMes);
                 if(userLogin != newMes.from ){
                     let audio = new Audio(appConfig.sound);
                     audio.play();
-
                 }
                 setListMens((valueCurrentList)=>{
                     return[
-                        newMessage,
+                        newMes,
                         ...valueCurrentList,
                     ]
                 });
@@ -62,7 +62,7 @@ export default function ChatPage() {
     function handleNewMessage(newMes) {
         const sendMens = {            
             from: userLogin,                   
-            text: newMes,
+            textmsg: newMes,
         };
 
         supabaseClient
@@ -235,7 +235,7 @@ export default function ChatPage() {
 
     // Photo, name and date from message
     function MessageList(props) {
-        console.log(props);
+        console.log('CONTEUDO DA PROPS: ', props);
         return (
             <Box
                 tag="ul"
@@ -250,11 +250,11 @@ export default function ChatPage() {
                 }}
 
             >
-                {props.m.mensagens.map((newMessage) => {
+                {props.mensagens.map((newMessage) => {
                     return (
                         //message
                         <Text
-                            key={newMessage.from}
+                            key={newMessage.id}
                             tag="li"
                             styleSheet={{
                                 borderRadius: '5px',
@@ -296,7 +296,7 @@ export default function ChatPage() {
                                     <Text tag="strong"
                                     //User Name
                                     >
-                                        {mensagem.de}
+                                        {newMessage.from}
                                     </Text>
                                     <Text
                                         //Message Date
@@ -311,7 +311,7 @@ export default function ChatPage() {
                                     </Text>
                                 </Box>
 
-                                {usuarioLogado === mensagem.from ?
+                                {userLogin === newMessage.from ?
                                     <Box
                                         title={`Excluir mensagem`}
                                         styleSheet={{
@@ -325,14 +325,14 @@ export default function ChatPage() {
                                                 supabaseClient
                                                     .from('messageChat')
                                                     .delete()
-                                                    .match({ id: mensagem.id }).then(() => {
+                                                    .match({ id: newMessage.id }).then(() => {
                                                         let indice = listMens.indexOf(mensagem);
-                                                        //1 parametro: Indice que vou manipular 
-                                                        //2 parametro: Quantidade de itens que seram manipulados a partir do primeiro paramentro 
-                                                        //3 parametro: Setar oq vc vai colocar no lugar (não obrigatório)
-                                                        listaDeMensagens.splice(indice, 1)
+                                                        //1 Param: Indice que vou manipular 
+                                                        //2 Param: Quantidade de itens que seram manipulados a partir do primeiro paramentro 
+                                                        //3 Param: Setar oq vc vai colocar no lugar (não obrigatório)
+                                                        listMens.splice(indice, 1)
                                                         //... juntar um objeto/array com o outro
-                                                        setListaMensagens([...listaDeMensagens])
+                                                        setListMens([...listMens])
                                                     })
                                             }
                                         }}
@@ -342,17 +342,18 @@ export default function ChatPage() {
                                     :
                                     null}
                             </Box>
+                            
                             {/* Declarativo */}
-                            {/* {mensagem.texto.startsWith(':sticker:').toString()} */}
-                            {mensagem.texto.startsWith(':sticker:') ?
+                            {/* {mensagem.textmsg.startsWith(':sticker:').toString()} */}
+                            {newMessage.textmsg.startsWith(':sticker:') ?
                                 (
-                                    <Image src={mensagem.texto.replace(':sticker:', '')}
+                                    <Image src={newMessage.textmsg.replace(':sticker:', '')}
                                         styleSheet={{
                                             width: '150px',
                                         }}
                                     />
                                 ) : (
-                                    mensagem.texto
+                                    newMessage.textmsg
                                 )}
 
                         </Text>
