@@ -1,8 +1,13 @@
-import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+//import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import { Box, Button, Text, TextField } from '@skynexui/components';
 import React from 'react';
 import {useRouter} from 'next/router'
 import appConfig from '../config.json';
 import { DiReact } from "react-icons/di";
+
+import Image from 'next/image'
+import imglogin from '../img/yamato.gif'
+import imgback from '../img/staryamato.jpg'
 
 //Componente React
 //Função recebe um argumento/propriedade
@@ -28,7 +33,8 @@ function Titulo(props){
 export default function PaginaInicial() {  
   const [username, setUsername] = React.useState('');
   const roteamento = useRouter();
-  const imageStart = '/img/yamatoGIF.gif';
+  //const imageStart = './img/yamato.gif';
+  const imageStart = imglogin;
 
   return (
     <>
@@ -129,10 +135,11 @@ export default function PaginaInicial() {
               }}
 
               onError={function (event) {
-                event.target.src = imagemInicial
+                event.target.src = imageStart
               }}
 
-              src={username.length > 2 ? `https://github.com/${username}.png` : imageStart}
+              // src={username.length > 2 ? `https://github.com/${username}.png` : imageStart}
+              src={username.length > 2 ? `https://github.com/${username}.png` : imglogin}
             />
 
             <a
